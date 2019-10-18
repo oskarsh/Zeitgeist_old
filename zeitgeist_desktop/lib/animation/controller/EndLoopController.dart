@@ -1,4 +1,5 @@
 import 'package:flare_flutter/flare_controller.dart';
+import 'package:flutter/src/foundation/change_notifier.dart';
 
 class EndLoopController implements FlareController {
   final String _animation;
@@ -17,4 +18,7 @@ class EndLoopController implements FlareController {
 
   @override
   void setViewTransform(Mat2D viewTransform) {}
+
+  @override
+  ValueNotifier<bool> isActive;
 }
