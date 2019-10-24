@@ -1,10 +1,12 @@
+import 'package:example_flutter/pages/store.dart';
 import 'package:flutter/material.dart';
 import "pages/timer.dart";
 import "pages/profile.dart";
-import "pages/history.dart";
+import "pages/store.dart";
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'state/appState.dart';
 import 'package:provider/provider.dart';
+import './services/database.dart';
 
 class App extends StatefulWidget {
   App({Key key, this.title}) : super(key: key);
@@ -23,11 +25,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: Duration(seconds: 2),
-      vsync: this,
-    );
-    _controller.stop();
+    // initialize the database
+    TimesDatabaseService.db.init();
+    // set the points from the database
   }
 
   @override
@@ -36,11 +36,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-  final _pageOptions = [HistoryPage(), TimerPage(), ProfilePage()];
+  final _pageOptions = [ShopPage(), TimerPage(), ProfilePage()];
 
-  void startAnimation() {
-    _controller.forward(from: 0);
-  }
 
   Widget renderApp() {
     final state = Provider.of<AppState>(context);

@@ -10,9 +10,9 @@ import 'package:countdown/countdown.dart';
 
 class AppState with ChangeNotifier {
   Duration resetValue;
-  Duration duration = Duration(minutes: 0);
+  Duration duration = Duration(minutes: 10);
   int cancelSecond = 10;
-  String displayTime = "00:00";
+  String displayTime = "10:00";
   bool isRunning = false;
   var mainTimer;
 

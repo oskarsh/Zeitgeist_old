@@ -9,6 +9,17 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  @override
+  void initState() { 
+    super.initState();
+    setTimesFromDB();
+  }
+
+  setTimesFromDB() {
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +38,22 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               )),
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                height: 300,
+                color: Colors.white,
+                child: Row(
+                  children: <Widget>[
+                    Icon(FeatherIcons.award),
+                    Text("Your Awards")
+                  ],
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: EdgeInsets.all(10),
             child: ClipRRect(
