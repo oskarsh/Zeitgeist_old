@@ -42,6 +42,7 @@ class TimesDatabaseService {
         timesList.add(TimesModel.fromMap(map));
       });
     }
+    print("fetch times");
     return timesList;
   }
 
@@ -78,7 +79,7 @@ class TimesDatabaseService {
     if (newTime.title.trim().isEmpty) newTime.title = 'Untitled Time';
     await db.transaction((transaction) {
       transaction.rawInsert(
-          'INSERT into Times(title, date, points, timeInMinutes) VALUES ("${newTime.title}", "${newTime.date.toIso8601String()}", "$newTime.points}", "${newTime.timeInMinutes}", );');
+          'INSERT into Times(title, date, points, timeInMinutes) VALUES ("${newTime.title}", "${newTime.date.toIso8601String()}", ${newTime.points}, ${newTime.timeInMinutes});');
     });
     print('Time added: ${newTime.title} ${newTime.timeInMinutes}');
     return newTime;

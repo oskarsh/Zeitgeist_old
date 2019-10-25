@@ -19,7 +19,7 @@ class _TimerPageState extends State<TimerPage>
   double _lowerValue = 0;
   double _upperValue;
   // value for animation
-  double value = 0;
+  double value = 5;
   IconData _iconData = Icons.play_arrow;
   String _labelData = "Play";
   var abortTimer;
@@ -143,7 +143,7 @@ class _TimerPageState extends State<TimerPage>
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
-                    SizedBox(width: 100),
+                    SizedBox(width: 75),
                     Column(
                       children: <Widget>[
                         Text(
@@ -176,7 +176,7 @@ class _TimerPageState extends State<TimerPage>
                       ],
                     ),
                     Container(
-                      width: 100,
+                      width: 75,
                       height: 500,
                       child: FlutterSlider(
                         values: [state.duration.inMinutes.toDouble()],

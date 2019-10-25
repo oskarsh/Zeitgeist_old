@@ -10,12 +10,11 @@ import 'package:countdown/countdown.dart';
 import "../services/database.dart";
 import "../model/time.dart";
 
-
 class AppState with ChangeNotifier {
-  Duration resetValue;
-  Duration duration = Duration(minutes: 10);
+  Duration resetValue = Duration(minutes: 1);
+  Duration duration = Duration(minutes: 1);
   int cancelSecond = 10;
-  String displayTime = "10:00";
+  String displayTime = "05:00";
   bool isRunning = false;
   var mainTimer;
 
@@ -43,7 +42,7 @@ class AppState with ChangeNotifier {
     // creating the timers
     CountDown countDown = CountDown(duration);
     mainTimer = countDown.stream.listen(null);
-    
+
     // REGISTER CALLBACKS
     mainTimer.onData(onMainTimerData);
     mainTimer.onDone(onMainTimerFinished);
@@ -57,15 +56,22 @@ class AppState with ChangeNotifier {
     print(d);
     duration = d;
     displayTime = computeDisplayTime();
+    isRunning = false;
     notifyListeners();
   }
 
-  onMainTimerFinished() async{
+  onMainTimerFinished() async {
     print("Main timer done");
-    TimesModel newTime = new TimesModel(title: "no title", points: 0, timeInMinutes: resetValue.inMinutes);
+    TimesModel newTime = new TimesModel(
+        title: "no title",
+        date: DateTime.now(),
+        points: 5,
+        timeInMinutes: resetValue.inMinutes);
     var latestTime = await TimesDatabaseService.db.addTimeInDB(newTime);
+    print(latestTime);
     resetTimer();
   }
+
   cancelTimer() {
     mainTimer.cancel();
     isRunning = false;
