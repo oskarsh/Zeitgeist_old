@@ -7,7 +7,6 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import "../services/database.dart";
 
-
 class TimerPage extends StatefulWidget {
   TimerPage({Key key}) : super(key: key);
 
@@ -112,9 +111,20 @@ class _TimerPageState extends State<TimerPage>
     );
   }
 
+  _handleTimerFinished() {
+    final state = Provider.of<AppState>(context);
+    _controller.reverse();
+    state.isFinished = false;
+    setState(() {
+      _iconData = Icons.play_arrow;
+      _labelData = "Play";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = Provider.of<AppState>(context);
+    state.isFinished ? _handleTimerFinished() : null;
     return Scaffold(
       backgroundColor: Colors.transparent,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -137,7 +147,9 @@ class _TimerPageState extends State<TimerPage>
                   children: <Widget>[
                 Container(
                   child: Column(
-                    children: <Widget>[Text("Coins: 5", style: TextStyle(color: Colors.white))],
+                    children: <Widget>[
+                      Text("Coins: 5", style: TextStyle(color: Colors.white))
+                    ],
                   ),
                 ),
                 Row(

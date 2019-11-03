@@ -16,6 +16,7 @@ class AppState with ChangeNotifier {
   int cancelSecond = 10;
   String displayTime = "05:00";
   bool isRunning = false;
+  bool isFinished = false;
   var mainTimer;
 
   void setMinutes(minutes) {
@@ -68,6 +69,9 @@ class AppState with ChangeNotifier {
     var latestTime = await TimesDatabaseService.db.addTimeInDB(newTime);
     print(latestTime);
     resetTimer();
+    isRunning = false;
+    isFinished = true;
+    notifyListeners();
   }
 
   cancelTimer() {
