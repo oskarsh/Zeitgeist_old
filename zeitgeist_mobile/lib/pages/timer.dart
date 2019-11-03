@@ -44,6 +44,7 @@ class _TimerPageState extends State<TimerPage>
 
   void _onPressFloatingButton() {
     final state = Provider.of<AppState>(context);
+    print(state.isRunning);
     if (state.isRunning) {
       if (_labelData == "surrender") {
         _showDialog();
@@ -136,7 +137,7 @@ class _TimerPageState extends State<TimerPage>
                   children: <Widget>[
                 Container(
                   child: Column(
-                    children: <Widget>[Text("Coins: 5")],
+                    children: <Widget>[Text("Coins: 5", style: TextStyle(color: Colors.white))],
                   ),
                 ),
                 Row(
@@ -168,7 +169,7 @@ class _TimerPageState extends State<TimerPage>
                           ),
                           builder: (BuildContext context, Widget child) {
                             return Transform.translate(
-                              offset: Offset(_controller.value * 1300, 0),
+                              offset: state.isRunning ? Offset(0, 50) : Offset(_controller.value * 1300, 0),
                               child: child,
                             );
                           },

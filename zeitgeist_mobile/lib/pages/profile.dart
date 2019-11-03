@@ -15,6 +15,18 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   List<TimelineModel> items = [];
 
+
+  static String computeDisplayTime(duration) {
+    String twoDigitMinutes = twoDigits(duration.inMinutes);
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  static String twoDigits(int n) {
+    if (n >= 10) return "$n";
+    return "0$n";
+  }
+
   // List<TimelineModel> items = [
   //   TimelineModel(timeline_element(),
   //       position: TimelineItemPosition.right,
@@ -27,13 +39,15 @@ class _ProfilePageState extends State<ProfilePage> {
   // ];
 
   static Widget timeline_element(minutes) {
-    print("model of timeline");
+    String time = computeDisplayTime(Duration(minutes: minutes));
     return Column(children: <Widget>[
       Container(
         color: Colors.white,
         height: 150,
         width: 500,
-        child: Text("${minutes}"),
+        child: Container(
+          child: Center(child: Text("${time}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),),),
+        )
       ),
       SizedBox(
         height: 8,

@@ -53,10 +53,8 @@ class AppState with ChangeNotifier {
   }
 
   onMainTimerData(Duration d) {
-    print(d);
     duration = d;
     displayTime = computeDisplayTime();
-    isRunning = false;
     notifyListeners();
   }
 
