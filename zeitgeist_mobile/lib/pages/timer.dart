@@ -30,9 +30,9 @@ class _TimerPageState extends State<TimerPage>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 2),
       vsync: this,
-    )..repeat();
+    );
     _controller.stop();
   }
 
@@ -169,7 +169,7 @@ class _TimerPageState extends State<TimerPage>
                           ),
                           builder: (BuildContext context, Widget child) {
                             return Transform.translate(
-                              offset: state.isRunning ? Offset(0, 50) : Offset(_controller.value * 1300, 0),
+                              offset: Offset(_controller.value * 300, 0),
                               child: child,
                             );
                           },
