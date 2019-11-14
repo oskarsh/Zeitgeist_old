@@ -64,7 +64,7 @@ class AppState with ChangeNotifier {
     TimesModel newTime = new TimesModel(
         title: "no title",
         date: DateTime.now(),
-        points: 5,
+        points: calculatePoints(resetValue.inMinutes),
         timeInMinutes: resetValue.inMinutes);
     var latestTime = await TimesDatabaseService.db.addTimeInDB(newTime);
     print(latestTime);
@@ -72,6 +72,11 @@ class AppState with ChangeNotifier {
     isRunning = false;
     isFinished = true;
     notifyListeners();
+  }
+
+  int calculatePoints(int time) {
+    var points = time * 0.3;
+    return points.floor();
   }
 
   cancelTimer() {

@@ -87,7 +87,24 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          child: Timeline(children: items, position: TimelinePosition.Left)),
+          child: Column(children: <Widget>[
+            Container(
+              height: 150,
+              margin: const EdgeInsets.only(top: 30.0),
+              width: MediaQuery.of(context).size.width * 0.95,
+              decoration: BoxDecoration(
+                borderRadius: new BorderRadius.all(new Radius.circular(10)),
+                color: Colors.red,
+
+              ),
+              child: Text("Red")),
+
+            Container(
+              height: 500,
+              child: Timeline(children: items, position: TimelinePosition.Left),
+            )
+          ]),
+          ),
     );
   }
 }

@@ -19,6 +19,7 @@ class _TimerPageState extends State<TimerPage>
   double _upperValue;
   // value for animation
   double value = 5;
+  int points;
   IconData _iconData = Icons.play_arrow;
   String _labelData = "Play";
   var abortTimer;
@@ -26,13 +27,22 @@ class _TimerPageState extends State<TimerPage>
   AnimationController _controller;
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
     _controller = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
     );
     _controller.stop();
+    setPointsFromDB();
+  }
+
+  setPointsFromDB() async{
+    var dbPoints = await TimesDatabaseService.db.getPointsFromDB();
+    setState(() {
+      points = dbPoints;
+    });
+    print(points);
   }
 
   @override
@@ -148,7 +158,7 @@ class _TimerPageState extends State<TimerPage>
                 Container(
                   child: Column(
                     children: <Widget>[
-                      Text("Coins: 5", style: TextStyle(color: Colors.white))
+                      Text("Coins: " + points.toString(), style: TextStyle(color: Colors.white))
                     ],
                   ),
                 ),
@@ -162,7 +172,7 @@ class _TimerPageState extends State<TimerPage>
                         Text(
                           state.displayTime,
                           style: new TextStyle(
-                              fontSize: 30.0, color: Colors.white),
+                              fontSize: 50.0, color: Colors.white),
                         ),
                         SizedBox(
                           height: 200,

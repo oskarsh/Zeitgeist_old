@@ -44,6 +44,24 @@ class TimesDatabaseService {
     }
     return timesList;
   }
+  
+   Future<int> getPointsFromD() async {
+    final db = await database;
+    List<TimesModel> timesList = [];
+    List<Map> maps = await db.query('Times',
+        columns: ['_id', 'title', 'date', 'points', 'timeInMinutes']);
+    if (maps.length > 0) {
+      maps.forEach((map) {
+        timesList.add(TimesModel.fromMap(map));
+      });
+    }
+    var points = 0;
+    timesList.forEach((time) {
+      print(time.points);
+      points += time.points;
+    });
+    return points;
+  }
 
   Future<List<TimesModel>> getTimeWithId(timeId) async {
     final db = await database;
