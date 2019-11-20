@@ -86,6 +86,47 @@ class TimesDatabaseService {
     return points;
   }
 
+  Future<int> getTimesCountInMinutesFromDB() async {
+    final db = await database;
+    List<TimesModel> timesList = [];
+    List<Map> maps = await db.query('Times',
+        columns: ['_id', 'title', 'date', 'points', 'timeInMinutes']);
+    if (maps.length > 0) {
+      maps.forEach((map) {
+        timesList.add(TimesModel.fromMap(map));
+      });
+    }
+    var times = 0;
+    timesList.forEach((time) {
+      print(time.timeInMinutes);
+      times += time.timeInMinutes;
+    });
+    return times;
+  }
+
+  Future<DateTime> getLastDateTimeFromDB() async{
+    final db = await database;
+    List<TimesModel> timesList = [];
+    List<Map> maps = await db.query('Times',
+        columns: ['_id', 'title', 'date', 'points', 'timeInMinutes']);
+    if (maps.length > 0) {
+      maps.forEach((map) {
+        timesList.add(TimesModel.fromMap(map));
+      });
+    }
+    var prev;
+    timesList.forEach((time) {
+      if (prev == null) {
+        prev = time;
+      }
+      print("prev");
+      print(prev.date);
+      print(time.date);
+      Duration diff = prev.date.difference(time.date);
+      print(diff.inDays);
+    });
+  }
+
   deleteTimeInDB(TimesModel timeToDelete) async {
     final db = await database;
     await db.delete('Times', where: '_id = ?', whereArgs: [timeToDelete.id]);

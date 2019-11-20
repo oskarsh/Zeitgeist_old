@@ -1,7 +1,7 @@
 import './pages/store.dart';
 import 'package:flutter/material.dart';
 import "pages/timer.dart";
-import "pages/profile.dart";
+import "pages/profile/profile.dart";
 import "pages/store.dart";
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'state/appState.dart';
