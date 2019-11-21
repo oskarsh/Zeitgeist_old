@@ -34,4 +34,4 @@
 
 ## Desktop Client
 
-Zeitgeist also offers a highly experimental Desktop Client. There are some issues tied to the Flutter Desktop Experience that makes further development really hard. A official Desktop Client will be released once the Problems are figured out by the Flutter team. However if you want to run and build it yourself check the [Documentation](https://github.com/daehruoydeef/Zeitgeist/wiki).
+Zeitgeist also offers a highly experimental Desktop Client. There are some issues tied to the Flutter Desktop Experience that makes further development really hard. A official Desktop Client will be released once the Problems are figured out by the Flutter team. However if you want to run and build it yourself check the [Documentation](https://github.com/daehruoydeef/Zeitgeist/wiki). Since this is not the main focus it will be not supported for now.
