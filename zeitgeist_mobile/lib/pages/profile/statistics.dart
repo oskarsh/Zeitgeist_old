@@ -45,28 +45,56 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   buildItem(title, value, type) {
-    return new Column(children: <Widget>[
-      Text("$title"),
-      Row(
-        children: <Widget>[Text("$value"), Text("$type")],
-      )
-    ]);
+    return Container(
+      margin: EdgeInsets.only(top: 20, bottom: 20),
+      child: new Column(children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("$title",
+              style: TextStyle(
+                  color: Colors.grey[800],
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20)),
+        ),
+        Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 30),
+              child: Text("$value",
+                  style: TextStyle(
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("$type"),
+            )
+          ],
+        )
+      ]),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Column(children: <Widget>[
-          Container(
-              height: 150,
-              margin: const EdgeInsets.only(top: 30.0),
-              width: MediaQuery.of(context).size.width * 0.95,
-              decoration: BoxDecoration(
-                borderRadius: new BorderRadius.all(new Radius.circular(10)),
-                color: Colors.red,
-              ),
-              child: Text("blue")),
+        child: ListView(
+          padding: EdgeInsets.all(10),
+          children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 50),
+            child: Container(
+                height: 150,
+                margin: const EdgeInsets.only(top: 30.0),
+                width: MediaQuery.of(context).size.width * 0.95,
+                decoration: BoxDecoration(
+                  borderRadius: new BorderRadius.all(new Radius.circular(10)),
+                  color: Colors.blue,
+                ),
+                child: Text("red")),
+          ),
           Container(
             alignment: Alignment.center,
             child: Column(
