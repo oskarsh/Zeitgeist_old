@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/services.dart';
 import '../../model/background.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class BackgroundShop extends StatefulWidget {
   BackgroundShop({Key key}) : super(key: key);
@@ -12,15 +12,9 @@ class BackgroundShop extends StatefulWidget {
 }
 
 class _BackgroundShopState extends State<BackgroundShop> {
-  List<String> images = [
-    "assets/images/backgrounds/cyberpunk-street.png",
-    "assets/images/backgrounds/magic-cliffs.png",
-    "assets/images/backgrounds/underwater.png",
-  ];
-
   List<Background> backgrounds = [];
   int currIdx;
-
+  final storage = new FlutterSecureStorage();
   @override
   void initState() {
     super.initState();
@@ -47,8 +41,9 @@ class _BackgroundShopState extends State<BackgroundShop> {
     });
   }
 
-  void buyItem() {
-    print("Item bought");
+  void buyItem() async {
+    print(backgrounds[currIdx]);
+    // await storage.read(key: "streak_counter");
   }
 
   void nextPage(id) {
