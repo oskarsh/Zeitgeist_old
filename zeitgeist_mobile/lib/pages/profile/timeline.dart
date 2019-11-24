@@ -26,17 +26,6 @@ class _TimelinePageState extends State<TimelinePage> {
     return "0$n";
   }
 
-  // List<TimelineModel> items = [
-  //   TimelineModel(timeline_element(),
-  //       position: TimelineItemPosition.right,
-  //       iconBackground: Colors.redAccent,
-  //       icon: Icon(Icons.blur_circular)),
-  //   TimelineModel(timeline_element(),
-  //       position: TimelineItemPosition.right,
-  //       iconBackground: Colors.redAccent,
-  //       icon: Icon(Icons.blur_circular)),
-  // ];
-
   static Widget timeline_element(minutes) {
     String time = computeDisplayTime(Duration(minutes: minutes));
     return Column(children: <Widget>[
@@ -59,7 +48,6 @@ class _TimelinePageState extends State<TimelinePage> {
   }
 
   buildTimelineModels(times) {
-    print("build timeline");
     List<TimelineModel> timelineModels = [];
     for (var time in times) {
       print(time.timeInMinutes);
@@ -88,10 +76,36 @@ class _TimelinePageState extends State<TimelinePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-      height: 500,
-      child: Timeline(children: items, position: TimelinePosition.Left),
-    ));
+    if (items.isEmpty) {
+      return Scaffold(
+          body: Container(
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text("looks empty here, start a new Quest!",
+                      style: TextStyle(
+                          color: Colors.grey[800],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20)),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Image.asset(
+                      "assets/empty.png",
+                      width: 80.0,
+                      height: 80.0,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              )));
+    } else {
+      return Scaffold(
+          body: Container(
+        height: 500,
+        child: Timeline(children: items, position: TimelinePosition.Left),
+      ));
+    }
   }
 }

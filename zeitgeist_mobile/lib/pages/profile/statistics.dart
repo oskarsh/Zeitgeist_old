@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../state/appState.dart';
-import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import "../../services/database.dart";
-import "../../model/time.dart";
-import 'package:timeline_list/timeline.dart';
-import 'package:timeline_list/timeline_model.dart';
 
 class StatisticsPage extends StatefulWidget {
   StatisticsPage({Key key}) : super(key: key);
@@ -80,20 +75,38 @@ class _StatisticsPageState extends State<StatisticsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: ListView(
-          padding: EdgeInsets.all(10),
-          children: <Widget>[
+        child: ListView(padding: EdgeInsets.all(10), children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 50),
             child: Container(
-                height: 150,
+                height: 170,
                 margin: const EdgeInsets.only(top: 30.0),
                 width: MediaQuery.of(context).size.width * 0.95,
                 decoration: BoxDecoration(
                   borderRadius: new BorderRadius.all(new Radius.circular(10)),
                   color: Colors.blue,
                 ),
-                child: Text("red")),
+                child: Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 20),
+                  child: new Column(children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("current streak",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Text("3 Days",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 40)),
+                    ),
+                  ]),
+                )),
           ),
           Container(
             alignment: Alignment.center,
