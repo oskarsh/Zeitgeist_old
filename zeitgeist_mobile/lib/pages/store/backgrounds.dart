@@ -19,10 +19,10 @@ class _BackgroundShopState extends State<BackgroundShop> {
   ];
 
   List<Background> backgrounds = [];
+  int currIdx;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     var json = loadAsset();
     loadBackgrounds(json);
@@ -33,18 +33,29 @@ class _BackgroundShopState extends State<BackgroundShop> {
   }
 
   void loadBackgrounds(json) {
-
     json.then((value) {
       List<dynamic> backgroundsMap = jsonDecode(value);
-      backgroundsMap.map((background){
-        Background newBg = new Background(background.name, background.price, background.image_path);
-        backgrounds.add(newBg);
+
+      List<Background> bgs = [];
+      for (var i in backgroundsMap) {
+        print(i);
+        bgs.add(Background(i["name"], i["price"], i["image_path"]));
+      }
+      setState(() {
+        backgrounds = bgs;
       });
     });
   }
 
   void buyItem() {
     print("Item bought");
+  }
+
+  void nextPage(id) {
+    print(id);
+    setState(() {
+      currIdx = id;
+    });
   }
 
   @override
@@ -62,6 +73,8 @@ class _BackgroundShopState extends State<BackgroundShop> {
         body: Container(
           padding: EdgeInsets.all(5),
           child: CarouselSlider(
+            onPageChanged: nextPage,
+            initialPage: 0,
             viewportFraction: 1.0,
             height: MediaQuery.of(context).size.height * 0.95,
             items: backgrounds.map((background) {
@@ -69,18 +82,34 @@ class _BackgroundShopState extends State<BackgroundShop> {
                 builder: (BuildContext context) {
                   return Container(
                       width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(color: Colors.amber),
                       child: Column(
                         children: <Widget>[
-                          Image.asset(
-                            background.image_path,
-                            height: MediaQuery.of(context).size.height * 0.7,
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            fit: BoxFit.cover,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 30.0),
+                            child: ClipRRect(
+                              borderRadius: new BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                background.image_path,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.7,
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                          Text(background.name),
-                          Text("${background.price}")
+                          Text(background.name,
+                              style: TextStyle(
+                                  color: Colors.grey[800],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 40)),
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text("${background.price}",
+                                style: TextStyle(
+                                    color: Colors.grey[800],
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20)),
+                          )
                         ],
                       ));
                 },
