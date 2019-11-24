@@ -7,10 +7,13 @@
 //
 import 'package:flutter/material.dart';
 import 'package:countdown/countdown.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "../services/database.dart";
 import "../model/time.dart";
 
 class AppState with ChangeNotifier {
+  // Create storage
+  final storage = new FlutterSecureStorage();
   Duration resetValue = Duration(minutes: 1);
   Duration duration = Duration(minutes: 1);
   int cancelSecond = 10;
@@ -67,11 +70,51 @@ class AppState with ChangeNotifier {
         points: calculatePoints(resetValue.inMinutes),
         timeInMinutes: resetValue.inMinutes);
     var latestTime = await TimesDatabaseService.db.addTimeInDB(newTime);
+    calculateStreak(latestTime);
     print(latestTime);
     resetTimer();
     isRunning = false;
     isFinished = true;
     notifyListeners();
+  }
+
+  calculateStreak(latestTime) async {
+    // this will calculate the current streak
+    // Read value
+    String tempDate = await storage.read(key: "lastDate");
+    DateTime currentDate = latestTime.date;
+    // check if the last date is null, should just happen if it is the first time
+    if (tempDate == null) {
+      storage.write(key: "lastDate", value: currentDate.toIso8601String());
+      storage.write(key: "streak_counter", value: 1.toString());
+    } else {
+      String tempCounter = await storage.read(key: "streak_counter");
+      // if there is no streak counter default it to 1
+      if (tempCounter == null) {
+        storage.write(key: "streak_counter", value: 1.toString());
+        tempCounter = "1";
+      }
+      // convert counter to int
+      int counter = int.parse(tempCounter);
+
+      // get the time when the counter was last incremented
+      DateTime lastIncrement = DateTime.parse(tempDate);
+
+      print("difference");
+      var difference = lastIncrement.difference(currentDate).inDays;
+
+      if (difference == 0) {
+        print("added +1 to streak");
+        counter++;
+        await storage.write(key: "streak_counter", value: counter.toString());
+      }
+      if (difference >= 1) {
+        // reset counter
+        counter = 0;
+        await storage.write(key: "streak_counter", value: counter.toString());
+      }
+      print(counter);
+    }
   }
 
   int calculatePoints(int time) {

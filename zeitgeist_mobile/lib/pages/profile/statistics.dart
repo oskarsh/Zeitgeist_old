@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "../../services/database.dart";
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class StatisticsPage extends StatefulWidget {
   StatisticsPage({Key key}) : super(key: key);
@@ -10,18 +11,16 @@ class StatisticsPage extends StatefulWidget {
 class _StatisticsPageState extends State<StatisticsPage> {
   int minutes = 0;
   int points = 0;
+  int streak = 0;
+  // Create storage
+  final storage = new FlutterSecureStorage();
 
   @override
   void initState() {
     super.initState();
     setPointsFromdB();
     setTimesCountFromDB();
-    setStreakFromDB();
-  }
-
-  setStreakFromDB() async {
-    var fetchedDate = await TimesDatabaseService.db.getLastDateTimeFromDB();
-    print(fetchedDate);
+    setStreakFromStorage();
   }
 
   setPointsFromdB() async {
@@ -36,6 +35,15 @@ class _StatisticsPageState extends State<StatisticsPage> {
         await TimesDatabaseService.db.getTimesCountInMinutesFromDB();
     setState(() {
       minutes = fetchedTimes;
+    });
+  }
+
+  setStreakFromStorage() async {
+    String streakCounter = await storage.read(key: "streak_counter");
+    print("streak");
+    print(streakCounter);
+    setState(() {
+      streak = int.parse(streakCounter);
     });
   }
 
@@ -99,7 +107,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(20),
-                      child: Text("3 Days",
+                      child: Text("${streak} Days",
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -114,7 +122,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
               children: <Widget>[
                 buildItem("Overall Time", minutes, "minutes"),
                 buildItem("Points", points, "points"),
-                buildItem("Running streak", 3, "Days"),
+                buildItem("Running streak", streak, "Days"),
                 buildItem("Quests finished", 14, "Quests"),
               ],
             ),
