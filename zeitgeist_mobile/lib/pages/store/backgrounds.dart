@@ -13,7 +13,7 @@ class BackgroundShop extends StatefulWidget {
 
 class _BackgroundShopState extends State<BackgroundShop> {
   List<Background> backgrounds = [];
-  int currIdx;
+  int currIdx = 0;
   final storage = new FlutterSecureStorage();
   @override
   void initState() {
@@ -41,9 +41,11 @@ class _BackgroundShopState extends State<BackgroundShop> {
     });
   }
 
-  void buyItem() async {
-    print(backgrounds[currIdx]);
-    // await storage.read(key: "streak_counter");
+  void buyItem() {
+    print("hello");
+    print(backgrounds[currIdx].image_path);
+    String bgImage = backgrounds[currIdx].image_path.toString();
+    storage.write(key: "image_path", value: bgImage);
   }
 
   void nextPage(id) {

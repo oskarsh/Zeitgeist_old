@@ -7,6 +7,7 @@ import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'state/appState.dart';
 import 'package:provider/provider.dart';
 import './services/database.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class App extends StatefulWidget {
   App({Key key, this.title}) : super(key: key);
@@ -21,13 +22,26 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   bool showIcons = true;
   int _selectedTab = 1;
   AnimationController _controller;
+  String bgimage = "assets/forest.png";
+  final storage = new FlutterSecureStorage();
 
   @override
   void initState() {
     super.initState();
     // initialize the database
     TimesDatabaseService.db.init();
+    setBackgroundImage();
     // set the points from the database
+  }
+
+  setBackgroundImage() async {
+    print("hello");
+    String bgimag = await storage.read(key: "image_path");
+    print("bg");
+    print(bgimag);
+    setState(() {
+      bgimage = bgimag;
+    });
   }
 
   @override
@@ -38,13 +52,13 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   final _pageOptions = [ShopPage(), TimerPage(), ProfilePage()];
 
-
   Widget renderApp() {
     final state = Provider.of<AppState>(context);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Container(color: Colors.transparent ,child: _pageOptions[_selectedTab]),
+      body: Container(
+          color: Colors.transparent, child: _pageOptions[_selectedTab]),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -55,8 +69,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                 children: <Widget>[
                   IconButton(
                       icon: new Icon(FeatherIcons.home),
-                      color:
-                          _selectedTab == 0 ? Colors.blue : Colors.grey,
+                      color: _selectedTab == 0 ? Colors.blue : Colors.grey,
                       onPressed: () {
                         setState(() {
                           _selectedTab = 0;
@@ -95,20 +108,22 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return _selectedTab == 1 ? Stack(
-      children: <Widget>[
-        new Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration:new BoxDecoration(
-            image: new DecorationImage(
-              image: new AssetImage("assets/forest.png"),
-              fit: BoxFit.contain,
-            ),
-          ),
-        ),
-        renderApp()
-      ],
-    ) : renderApp();
+    return _selectedTab == 1
+        ? Stack(
+            children: <Widget>[
+              new Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                    image: new AssetImage(bgimage),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              renderApp()
+            ],
+          )
+        : renderApp();
   }
 }
