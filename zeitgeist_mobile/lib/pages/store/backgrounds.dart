@@ -5,9 +5,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import '../../model/background.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fancy_dialog/fancy_dialog.dart';
+import 'package:zeitgeist_mobile/state/appState.dart';
+import 'package:provider/provider.dart';
 
 class BackgroundShop extends StatefulWidget {
-  BackgroundShop({Key key}) : super(key: key);
+  final AppState state;
+
+  BackgroundShop({Key key, this.state}) : super(key: key);
 
   _BackgroundShopState createState() => _BackgroundShopState();
 }
@@ -60,12 +64,6 @@ class _BackgroundShopState extends State<BackgroundShop> {
             int price = backgrounds[currIdx].price;
             String storageStreak = await storage.read(key: "streak");
             int streak = int.parse(storageStreak);
-            // String bgImage =
-            // "assets/images/backgrounds/magic-cliffs.png";
-            // backgrounds[currIdx].image_path.toString();
-            // writing to shared storage space, making it avaible at app.dart
-            // storage.write(key: "background", value: bgImage);
-            // Navigator.pop(context);
 
             if (streak >= price) {
               showDialog(
@@ -77,6 +75,7 @@ class _BackgroundShopState extends State<BackgroundShop> {
                       String bgImage =
                           backgrounds[currIdx].image_path.toString();
                       print("WRITE $bgImage");
+                      widget.state.setCurrentBG(bgImage);
                       storage.write(key: "background", value: bgImage);
                     }),
               );

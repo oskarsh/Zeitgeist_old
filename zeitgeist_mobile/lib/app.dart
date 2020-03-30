@@ -55,7 +55,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   setBackgroundImage() async {
     String bg = await storage.read(key: "background");
-
+    print("BG IN APP IS $bg");
     // falling back to a default
     if (bg == null) {
       bg = "assets/images/backgrounds/forest.png";
@@ -76,7 +76,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   Widget renderApp() {
     final state = Provider.of<AppState>(context);
-
+    if (state.getCurrentBG() == background || state.getCurrentBG() == null) {
+      state.setCurrentBG(background);
+    }
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -130,19 +132,26 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final state = Provider.of<AppState>(context);
     return _selectedTab == 1
         ? Stack(
             children: <Widget>[
-              new Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: new BoxDecoration(
-                  image: new DecorationImage(
-                    image: new AssetImage(background),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
+              state.getCurrentBG() != null
+                  ? new Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                          image: new AssetImage(state.getCurrentBG()),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    )
+                  : new Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      color: Colors.green,
+                    ),
               renderApp()
             ],
           )

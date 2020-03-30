@@ -19,6 +19,7 @@ class AppState with ChangeNotifier {
   int cancelSecond = 10;
   String displayTime = "05:00";
   bool isRunning = false;
+  String currentBG;
   bool isFinished = false;
   var mainTimer;
 
@@ -34,6 +35,16 @@ class AppState with ChangeNotifier {
     duration = resetValue;
     displayTime = computeDisplayTime();
     notifyListeners();
+  }
+
+  void setCurrentBG(background) {
+    currentBG = background;
+    print("new background is  $background");
+    notifyListeners();
+  }
+
+  String getCurrentBG() {
+    return currentBG;
   }
 
   void setSeconds(seconds) {

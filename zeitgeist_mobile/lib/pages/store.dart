@@ -21,6 +21,7 @@ class _ShopPageState extends State<ShopPage> {
   @override
   Widget build(BuildContext context) {
     final state = Provider.of<AppState>(context);
+
     return Scaffold(
       body: Container(
           child: Center(
@@ -39,8 +40,10 @@ class _ShopPageState extends State<ShopPage> {
               title: "Backgrounds",
               asset: "image_frame.png",
               onPress: (() {
-                Navigator.push(context,
-                    CupertinoPageRoute(builder: (context) => BackgroundShop()));
+                Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                        builder: (context) => BackgroundShop(state: state)));
               }),
             ),
           ],
