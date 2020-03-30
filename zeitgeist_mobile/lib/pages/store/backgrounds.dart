@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../model/background.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fancy_dialog/fancy_dialog.dart';
 
 class BackgroundShop extends StatefulWidget {
   BackgroundShop({Key key}) : super(key: key);
@@ -41,13 +42,6 @@ class _BackgroundShopState extends State<BackgroundShop> {
     });
   }
 
-  void buyItem() {
-    print("hello");
-    print(backgrounds[currIdx].image_path);
-    String bgImage = backgrounds[currIdx].image_path.toString();
-    storage.write(key: "image_path", value: bgImage);
-  }
-
   void nextPage(id) {
     print(id);
     setState(() {
@@ -62,7 +56,34 @@ class _BackgroundShopState extends State<BackgroundShop> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton.extended(
           label: new Text("GET"),
-          onPressed: buyItem,
+          onPressed: () async {
+            int price = backgrounds[currIdx].price;
+            String storageStreak = await storage.read(key: "streak");
+            int streak = int.parse(storageStreak);
+            // String bgImage =
+            // "assets/images/backgrounds/magic-cliffs.png";
+            // backgrounds[currIdx].image_path.toString();
+            // writing to shared storage space, making it avaible at app.dart
+            // storage.write(key: "background", value: bgImage);
+            // Navigator.pop(context);
+
+            if (streak >= price) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => FancyDialog(
+                    title: "Buy Background?",
+                    descreption: "",
+                    okFun: () {
+                      String bgImage =
+                          backgrounds[currIdx].image_path.toString();
+                      print("WRITE $bgImage");
+                      storage.write(key: "background", value: bgImage);
+                    }),
+              );
+            } else {
+              print("pop context");
+            }
+          },
           shape: new BeveledRectangleBorder(
             borderRadius: new BorderRadius.circular(10.0),
           ),

@@ -19,8 +19,8 @@ class ShopCard extends StatelessWidget {
       child: InkWell(
         onTap: onPress,
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.8,
-          height: 110,
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: 110,
             padding: EdgeInsets.all(15.0),
             color: Colors.white,
             child: Padding(
@@ -34,9 +34,11 @@ class ShopCard extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(10,10,2,2),
-                    width:MediaQuery.of(context).size.width * 0.5,
-                    child: Center(child: Text(title),),
+                    padding: const EdgeInsets.fromLTRB(10, 10, 2, 2),
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: Center(
+                      child: Text(title),
+                    ),
                   )
                 ],
               ),

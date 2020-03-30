@@ -39,7 +39,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   setStreakFromStorage() async {
-    String streakCounter = await storage.read(key: "streak_counter");
+    String streakCounter = await storage.read(key: "streak");
     print("streak");
     print(streakCounter);
     setState(() {

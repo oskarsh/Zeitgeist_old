@@ -83,6 +83,10 @@ class TimesDatabaseService {
       print(time.points);
       points += time.points;
     });
+
+    // debug
+    points = 1000;
+
     return points;
   }
 
@@ -104,7 +108,7 @@ class TimesDatabaseService {
     return times;
   }
 
-  Future<DateTime> getLastDateTimeFromDB() async{
+  Future<DateTime> getLastDateTimeFromDB() async {
     final db = await database;
     List<TimesModel> timesList = [];
     List<Map> maps = await db.query('Times',

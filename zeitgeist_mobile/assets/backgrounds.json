@@ -2,17 +2,26 @@
   {
     "name": "Cyberpunk",
     "price": 225,
-    "image_path": "assets/images/backgrounds/cyberpunk-street.png"
+    "image_path": "assets/images/backgrounds/cyberpunk1.png"
   },
   {
     "name": "Underwater",
     "price": 125,
-    "image_path": "assets/images/backgrounds/underwater.png"
+    "image_path": "assets/images/backgrounds/underwater2.png"
+  },
+  {
+    "name": "Cyberpunk Bar",
+    "price": 225,
+    "image_path": "assets/images/backgrounds/cyberpunk2.png"
   },
   {
     "name": "Magic Cliffs",
     "price": 75,
-    "image_path": "assets/images/backgrounds/magic-cliffs.png"
+    "image_path": "assets/images/backgrounds/magic-cliffs1.png"
+  },
+  {
+    "name": "Forest",
+    "price": 0,
+    "image_path": "assets/images/backgrounds/forest.png"
   }
-
 ]

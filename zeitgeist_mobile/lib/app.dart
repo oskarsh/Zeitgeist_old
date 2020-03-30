@@ -22,25 +22,47 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   bool showIcons = true;
   int _selectedTab = 1;
   AnimationController _controller;
-  String bgimage = "assets/forest.png";
   final storage = new FlutterSecureStorage();
+  String background;
 
   @override
   void initState() {
     super.initState();
     // initialize the database
     TimesDatabaseService.db.init();
+    // setting default values
+    init();
+    // set default wallpaper
     setBackgroundImage();
-    // set the points from the database
+  }
+
+  void init() async {
+    if (storage.read(key: "background") == null) {
+      storage.write(
+          key: "background", value: "assets/images/backgrounds/forest.png");
+    }
+
+    // DEBUG
+    await storage.write(key: "streak", value: "1000");
+
+    String storageStreak = await storage.read(key: "streak");
+
+    if (storageStreak == null) {
+      await storage.write(key: "streak", value: "5");
+      storageStreak = await storage.read(key: "streak");
+    }
   }
 
   setBackgroundImage() async {
-    print("hello");
-    String bgimag = await storage.read(key: "image_path");
-    print("bg");
-    print(bgimag);
+    String bg = await storage.read(key: "background");
+
+    // falling back to a default
+    if (bg == null) {
+      bg = "assets/images/backgrounds/forest.png";
+    }
+    print(bg);
     setState(() {
-      bgimage = bgimag;
+      background = bg;
     });
   }
 
@@ -116,7 +138,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                 width: double.infinity,
                 decoration: new BoxDecoration(
                   image: new DecorationImage(
-                    image: new AssetImage(bgimage),
+                    image: new AssetImage(background),
                     fit: BoxFit.contain,
                   ),
                 ),

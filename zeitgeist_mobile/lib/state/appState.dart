@@ -86,12 +86,12 @@ class AppState with ChangeNotifier {
     // check if the last date is null, should just happen if it is the first time
     if (tempDate == null) {
       storage.write(key: "lastDate", value: currentDate.toIso8601String());
-      storage.write(key: "streak_counter", value: 1.toString());
+      storage.write(key: "streak", value: 1.toString());
     } else {
-      String tempCounter = await storage.read(key: "streak_counter");
+      String tempCounter = await storage.read(key: "streak");
       // if there is no streak counter default it to 1
       if (tempCounter == null) {
-        storage.write(key: "streak_counter", value: 1.toString());
+        storage.write(key: "streak", value: 1.toString());
         tempCounter = "1";
       }
       // convert counter to int
@@ -106,12 +106,12 @@ class AppState with ChangeNotifier {
       if (difference == 0) {
         print("added +1 to streak");
         counter++;
-        await storage.write(key: "streak_counter", value: counter.toString());
+        await storage.write(key: "streak", value: counter.toString());
       }
       if (difference >= 1) {
         // reset counter
         counter = 0;
-        await storage.write(key: "streak_counter", value: counter.toString());
+        await storage.write(key: "streak", value: counter.toString());
       }
       print(counter);
     }
